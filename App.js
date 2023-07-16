@@ -6,12 +6,15 @@ import {
   Vibration,
   TouchableOpacity,
 } from "react-native";
+import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
 
 export default function App() {
   const [intervalValue, setIntervalValue] = useState(5); // Default interval is 5 minutes
   const [timeLeft, setTimeLeft] = useState(intervalValue * 60); // Time left in seconds
 
   useEffect(() => {
+    activateKeepAwake(); // Activate keep awake
+
     const intervalInMilliseconds = intervalValue * 60 * 1000;
 
     const vibrateMultipleTimes = (times) => {
@@ -43,6 +46,7 @@ export default function App() {
     return () => {
       clearInterval(vibrationInterval);
       clearInterval(timer);
+      deactivateKeepAwake(); // Deactivate keep awake
     };
   }, [intervalValue]);
 
@@ -94,8 +98,8 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <Text style={styles.heading}>
-        After choosing the time interval, put phone in pocket to feel the
-        vibrations!
+        After choosing the time interval, put the phone in your pocket to feel
+        the vibrations!
       </Text>
     </View>
   );
