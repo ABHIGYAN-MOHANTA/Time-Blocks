@@ -5,6 +5,7 @@ import {
   View,
   Vibration,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
 
@@ -31,6 +32,7 @@ export default function App() {
 
     const vibrationInterval = setInterval(() => {
       vibrateMultipleTimes(3); // Trigger multiple vibrations
+      setTimeLeft(intervalValue * 60); // Reset time left after each vibration interval
     }, intervalInMilliseconds);
 
     const timer = setInterval(() => {
@@ -63,45 +65,43 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>
-        Choose the interval for a time block for your phone to vibrate!
-      </Text>
-      <Text style={styles.intervalText}>{intervalValue} minutes</Text>
-      <Text style={styles.timeLeftText}>
-        Time left for next vibration: {formatTime(timeLeft)}
-      </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleButtonPress(0.1)}
-        >
-          <Text style={styles.buttonText}>0.1 min</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleButtonPress(5)}
-        >
-          <Text style={styles.buttonText}>5 min</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleButtonPress(10)}
-        >
-          <Text style={styles.buttonText}>10 min</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleButtonPress(25)}
-        >
-          <Text style={styles.buttonText}>25 min</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Time Blocks inspired by Elon Musk!</Text>
+        <Text style={styles.heading}>Choose the interval for a time block</Text>
+        <Text style={styles.subHeading}>
+          Your phone will vibrate at the end of each interval
+        </Text>
+        <Text style={styles.intervalText}>{intervalValue} minutes</Text>
+        <Text style={styles.timeLeftText}>
+          Time left for next vibration: {formatTime(timeLeft)}
+        </Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.button5]}
+            onPress={() => handleButtonPress(5)}
+          >
+            <Text style={styles.buttonText}>5 min</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.button10]}
+            onPress={() => handleButtonPress(10)}
+          >
+            <Text style={styles.buttonText}>10 min</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.button25]}
+            onPress={() => handleButtonPress(25)}
+          >
+            <Text style={styles.buttonText}>25 min</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.note}>
+          *Please keep the app on while using. Vibrations may not work in
+          certain scenarios.
+        </Text>
       </View>
-      <Text style={styles.heading}>
-        After choosing the time interval, put the phone in your pocket to feel
-        the vibrations!
-      </Text>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -110,43 +110,78 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
-    color: "white",
+    backgroundColor: "#0E122B",
+    padding: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#F6F6F6",
+    textAlign: "center",
+    letterSpacing: 1,
   },
   heading: {
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 100,
     marginBottom: 10,
-    color: "white",
+    color: "#F6F6F6",
     textAlign: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
+    letterSpacing: 1,
+  },
+  subHeading: {
+    fontSize: 16,
+    marginBottom: 40,
+    color: "#F6F6F6",
+    textAlign: "center",
+    letterSpacing: 1,
   },
   intervalText: {
     fontSize: 18,
     marginBottom: 10,
-    color: "white",
+    color: "#F6F6F6",
+    textAlign: "center",
+    letterSpacing: 1,
   },
   timeLeftText: {
     fontSize: 16,
-    marginBottom: 20,
-    color: "white",
+    marginBottom: 40,
+    color: "#F6F6F6",
+    textAlign: "center",
+    letterSpacing: 1,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
+    width: "100%",
+    marginBottom: 40,
   },
   button: {
-    backgroundColor: "#2196F3",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    flex: 1,
+    backgroundColor: "#5E72E4",
+    paddingVertical: 15,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  button5: {
+    marginRight: 10,
+  },
+  button10: {
+    marginHorizontal: 10,
+  },
+  button25: {
+    marginLeft: 10,
   },
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "white",
+    color: "#F6F6F6",
+    textAlign: "center",
+  },
+  note: {
+    fontSize: 14,
+    color: "#F6F6F6",
+    textAlign: "center",
+    letterSpacing: 1,
   },
 });
