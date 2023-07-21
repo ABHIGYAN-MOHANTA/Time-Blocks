@@ -109,7 +109,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.title}>Time Blocks inspired by Elon Musk!</Text>
+        <Text style={styles.title}>Time Box inspired by Elon Musk!</Text>
         <Text style={styles.heading}>Choose the interval for a time block</Text>
         <Text style={styles.subHeading}>
           Your phone will vibrate at the end of each interval
