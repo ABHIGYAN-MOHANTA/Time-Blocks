@@ -57,6 +57,48 @@ export default function App() {
     setTimeLeft(newInterval * 60);
   };
 
+  const POMODORO_TIME = 25; // 25 minutes for a Pomodoro session
+  const SHORT_BREAK_TIME = 5; // 5 minutes for a short break
+  let intervalId = null; // Variable to store the interval ID
+
+  const handleButtonPomodoro = () => {
+    const newInterval = POMODORO_TIME + SHORT_BREAK_TIME; // Set the new interval (Pomodoro + Short Break)
+    setIntervalValue(newInterval);
+    setTimeLeft(newInterval * 60);
+
+    const vibratePomodoro = () => {
+      Vibration.vibrate();
+      setTimeout(
+        () => {
+          Vibration.vibrate();
+        },
+        POMODORO_TIME * 60 * 1000
+      ); // Vibrate after the Pomodoro session
+
+      setTimeout(
+        () => {
+          Vibration.vibrate();
+        },
+        newInterval * 60 * 1000
+      ); // Vibrate after the full interval (Pomodoro + Short Break)
+    };
+
+    // Start the vibratePomodoro function
+    vibratePomodoro();
+
+    // Clear previous intervals before setting a new one
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    intervalId = setInterval(
+      () => {
+        handleButtonPomodoro();
+      },
+      newInterval * 60 * 1000
+    );
+  };
+
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const formattedMinutes = String(minutes).padStart(2, "0");
@@ -94,6 +136,14 @@ export default function App() {
             onPress={() => handleButtonPress(25)}
           >
             <Text style={styles.buttonText}>25 min</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonPomo]}
+            onPress={() => handleButtonPomodoro()}
+          >
+            <Text style={styles.buttonText}>Pomodoro Tech 25:5</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.note}>
@@ -171,6 +221,9 @@ const styles = StyleSheet.create({
   },
   button25: {
     marginLeft: 10,
+  },
+  buttonPomo: {
+    backgroundColor: "#E4725E",
   },
   buttonText: {
     fontSize: 16,
