@@ -57,46 +57,41 @@ export default function App() {
     setTimeLeft(newInterval * 60);
   };
 
-  const POMODORO_TIME = 25; // 25 minutes for a Pomodoro session
-  const SHORT_BREAK_TIME = 5; // 5 minutes for a short break
-  let intervalId = null; // Variable to store the interval ID
-
   const handleButtonPomodoro = () => {
-    const newInterval = POMODORO_TIME + SHORT_BREAK_TIME; // Set the new interval (Pomodoro + Short Break)
-    setIntervalValue(newInterval);
-    setTimeLeft(newInterval * 60);
+    const pomodoroInterval = 1; // 25 minutes
+    const shortBreakInterval = 0.5; // 5 minutes
 
-    const vibratePomodoro = () => {
+    // Function to vibrate the phone multiple times
+    const vibrateMultipleTimes = (times) => {
+      if (times === 0) {
+        // After all vibrations, set the appropriate interval and reset time left
+        const nextInterval =
+          intervalValue === pomodoroInterval
+            ? shortBreakInterval
+            : pomodoroInterval;
+        setIntervalValue(nextInterval);
+        setTimeLeft(nextInterval * 60);
+        return;
+      }
+
       Vibration.vibrate();
-      setTimeout(
-        () => {
-          Vibration.vibrate();
-        },
-        POMODORO_TIME * 60 * 1000
-      ); // Vibrate after the Pomodoro session
-
-      setTimeout(
-        () => {
-          Vibration.vibrate();
-        },
-        newInterval * 60 * 1000
-      ); // Vibrate after the full interval (Pomodoro + Short Break)
+      setTimeout(() => {
+        vibrateMultipleTimes(times - 1);
+      }, 1000); // Delay between vibrations (1000ms = 1 second)
     };
 
-    // Start the vibratePomodoro function
-    vibratePomodoro();
+    // Clear any previous timers (if any)
+    clearInterval(pomodoroTimer);
 
-    // Clear previous intervals before setting a new one
-    if (intervalId) {
-      clearInterval(intervalId);
-    }
+    // Start the pomodoro timer with the selected interval
+    const intervalInMilliseconds = intervalValue * 60 * 1000;
+    const pomodoroTimer = setInterval(() => {
+      vibrateMultipleTimes(3); // Trigger multiple vibrations
+      setTimeLeft((prevTimeLeft) => prevTimeLeft - intervalValue * 60);
+    }, intervalInMilliseconds);
 
-    intervalId = setInterval(
-      () => {
-        handleButtonPomodoro();
-      },
-      newInterval * 60 * 1000
-    );
+    // Initial trigger of pomodoro timer
+    vibrateMultipleTimes(3);
   };
 
   const formatTime = (seconds) => {
