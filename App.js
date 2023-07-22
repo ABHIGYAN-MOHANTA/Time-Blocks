@@ -57,43 +57,6 @@ export default function App() {
     setTimeLeft(newInterval * 60);
   };
 
-  const handleButtonPomodoro = () => {
-    const pomodoroInterval = 1; // 25 minutes
-    const shortBreakInterval = 0.5; // 5 minutes
-
-    // Function to vibrate the phone multiple times
-    const vibrateMultipleTimes = (times) => {
-      if (times === 0) {
-        // After all vibrations, set the appropriate interval and reset time left
-        const nextInterval =
-          intervalValue === pomodoroInterval
-            ? shortBreakInterval
-            : pomodoroInterval;
-        setIntervalValue(nextInterval);
-        setTimeLeft(nextInterval * 60);
-        return;
-      }
-
-      Vibration.vibrate();
-      setTimeout(() => {
-        vibrateMultipleTimes(times - 1);
-      }, 1000); // Delay between vibrations (1000ms = 1 second)
-    };
-
-    // Clear any previous timers (if any)
-    clearInterval(pomodoroTimer);
-
-    // Start the pomodoro timer with the selected interval
-    const intervalInMilliseconds = intervalValue * 60 * 1000;
-    const pomodoroTimer = setInterval(() => {
-      vibrateMultipleTimes(3); // Trigger multiple vibrations
-      setTimeLeft((prevTimeLeft) => prevTimeLeft - intervalValue * 60);
-    }, intervalInMilliseconds);
-
-    // Initial trigger of pomodoro timer
-    vibrateMultipleTimes(3);
-  };
-
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const formattedMinutes = String(minutes).padStart(2, "0");
@@ -104,7 +67,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.title}>Time Box inspired by Elon Musk!</Text>
+        <Text style={styles.title}>Time Blocks inspired by Elon Musk!</Text>
         <Text style={styles.heading}>Choose the interval for a time block</Text>
         <Text style={styles.subHeading}>
           Your phone will vibrate at the end of each interval
@@ -131,14 +94,6 @@ export default function App() {
             onPress={() => handleButtonPress(25)}
           >
             <Text style={styles.buttonText}>25 min</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonPomo]}
-            onPress={() => handleButtonPomodoro()}
-          >
-            <Text style={styles.buttonText}>Pomodoro Tech 25:5</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.note}>
@@ -216,9 +171,6 @@ const styles = StyleSheet.create({
   },
   button25: {
     marginLeft: 10,
-  },
-  buttonPomo: {
-    backgroundColor: "#E4725E",
   },
   buttonText: {
     fontSize: 16,
