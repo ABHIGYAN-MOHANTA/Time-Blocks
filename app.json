@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "timeblock",
-    "slug": "timeblock",
+    "name": "TimeBox",
+    "slug": "TimeBox",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,14 +22,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.thunderdome6602.timeblock"
+      "package": "com.thunderdome6602.TimeBox"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "a8a1fecb-cbcc-4a1d-a414-4577c9666bc1"
+        "projectId": "a0bdcefb-469d-4704-8e21-58876fd3bece"
       }
     }
   }
