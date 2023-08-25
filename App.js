@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
-  StyleSheet,
   Text,
   View,
   Vibration,
   TouchableOpacity,
   SafeAreaView,
-  StatusBar,
 } from "react-native";
 import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
+import { styles } from "./styles";
 
 export default function App() {
   const [intervalValue, setIntervalValue] = useState(5); // Default interval is 5 minutes
@@ -67,10 +67,10 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar hidden />
+      <StatusBar style="light" />
       <View style={styles.container}>
-        <Text style={styles.title}>Time Box inspired by Elon Musk!</Text>
-        <Text style={styles.heading}>Choose the interval for a time box</Text>
+        <Text style={styles.title}>Time Blocks inspired by Elon Musk!</Text>
+        <Text style={styles.heading}>Choose the interval for a time block</Text>
         <Text style={styles.subHeading}>
           Your phone will vibrate at the end of each interval
         </Text>
@@ -106,84 +106,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0E122B",
-    padding: 20,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#F6F6F6",
-    textAlign: "center",
-    letterSpacing: 1,
-  },
-  heading: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#F6F6F6",
-    textAlign: "center",
-    letterSpacing: 1,
-  },
-  subHeading: {
-    fontSize: 16,
-    marginBottom: 40,
-    color: "#F6F6F6",
-    textAlign: "center",
-    letterSpacing: 1,
-  },
-  intervalText: {
-    fontSize: 18,
-    marginBottom: 10,
-    color: "#F6F6F6",
-    textAlign: "center",
-    letterSpacing: 1,
-  },
-  timeLeftText: {
-    fontSize: 16,
-    marginBottom: 40,
-    color: "#F6F6F6",
-    textAlign: "center",
-    letterSpacing: 1,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    marginBottom: 40,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: "#5E72E4",
-    paddingVertical: 15,
-    borderRadius: 10,
-    elevation: 2,
-  },
-  button5: {
-    marginRight: 10,
-  },
-  button10: {
-    marginHorizontal: 10,
-  },
-  button25: {
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#F6F6F6",
-    textAlign: "center",
-  },
-  note: {
-    fontSize: 14,
-    color: "#F6F6F6",
-    textAlign: "center",
-    letterSpacing: 1,
-  },
-});
