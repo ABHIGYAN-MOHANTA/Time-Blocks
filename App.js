@@ -69,10 +69,11 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       <View style={styles.container}>
-        <Text style={styles.title}>Time Blocks inspired by Elon Musk!</Text>
-        <Text style={styles.heading}>Choose the interval for a time block</Text>
+        <Text style={styles.title}>Time Blocks</Text>
+        <Text style={styles.header}> inspired by Elon Musk!</Text>
+        <Text style={styles.heading}>Choose interval for a time block</Text>
         <Text style={styles.subHeading}>
-          Your phone will vibrate at the end of each interval
+          Your phone will vibrate at the end of each interval!
         </Text>
         <Text style={styles.intervalText}>{intervalValue} minutes</Text>
         <Text style={styles.timeLeftText}>
@@ -98,9 +99,12 @@ export default function App() {
             <Text style={styles.buttonText}>25 min</Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.subHeading}>Directions for Use </Text>
         <Text style={styles.note}>
-          *Please keep the app on while using. Vibrations may not work in
-          certain scenarios.
+          Please keep the app on while using. Vibrations may not work when app
+          in background or screen off. The screen will not turn off
+          automatically while using this app. You can keep the phone in your
+          pocket, or on some metal to better feel the vibrations!
         </Text>
       </View>
     </SafeAreaView>
