@@ -7,33 +7,32 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
+import { useKeepAwake } from "expo-keep-awake";
 import { styles } from "./styles";
 
 export default function App() {
-  const [intervalValue, setIntervalValue] = useState(5); // Default interval is 5 minutes
-  const [timeLeft, setTimeLeft] = useState(intervalValue * 60); // Time left in seconds
+  useKeepAwake();
+  const [intervalValue, setIntervalValue] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(intervalValue * 60);
 
   useEffect(() => {
-    activateKeepAwake(); // Activate keep awake
-
     const intervalInMilliseconds = intervalValue * 60 * 1000;
 
     const vibrateMultipleTimes = (times) => {
       if (times === 0) {
-        setTimeLeft(intervalValue * 60); // Reset time left after all vibrations
+        setTimeLeft(intervalValue * 60);
         return;
       }
 
       Vibration.vibrate();
       setTimeout(() => {
         vibrateMultipleTimes(times - 1);
-      }, 500); // Delay between vibrations (adjust as needed)
+      }, 500);
     };
 
     const vibrationInterval = setInterval(() => {
-      vibrateMultipleTimes(3); // Trigger multiple vibrations
-      setTimeLeft(intervalValue * 60); // Reset time left after each vibration interval
+      vibrateMultipleTimes(3);
+      setTimeLeft(intervalValue * 60);
     }, intervalInMilliseconds);
 
     const timer = setInterval(() => {
@@ -49,7 +48,6 @@ export default function App() {
     return () => {
       clearInterval(vibrationInterval);
       clearInterval(timer);
-      deactivateKeepAwake(); // Deactivate keep awake
     };
   }, [intervalValue]);
 
